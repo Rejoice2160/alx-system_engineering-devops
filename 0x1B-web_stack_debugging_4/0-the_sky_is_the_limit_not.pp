@@ -1,12 +1,11 @@
-# Fix problem of high amount of requests
+# Increase the amount of traffic that nginx can take per time
 #
-# exec {'replace':
-#   provider => shell,
-#     command  => 'sudo sed -i "s/ULIMIT=\"-n 15\"/ULIMIT=\"-n 4096\"/" /etc/default/nginx',
-#       before   => Exec['restart'],
-#       }
+# exec { 'increase-limit':
+#   command => 'sed -i "s/15/4096/" /etc/default/nginx',
+#     path    => '/usr/local/bin/:/bin/'
+#     }
 #
-#       exec {'restart':
-#         provider => shell,
-#           command  => 'sudo service nginx restart',
-#           }
+#     -> exec { 'nginx-restart':
+#       command => 'nginx restart',
+#         path    => '/etc/init.d/'
+#         }
